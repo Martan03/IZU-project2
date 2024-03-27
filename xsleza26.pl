@@ -11,19 +11,13 @@ u35_r:- write('Zadej LIN: '),read(LIN),
 	u35(LIN,LOUT),write(LOUT).
 
 % Reseni:
-u35(LIN, LOUT) :- odd(LIN, Odd), even(LIN, Even), join(Odd, Even, LOUT).
+u35(LIN, LOUT) :- even_odd(LIN, Odd, Even), join(Odd, Even, LOUT).
 
-% Gets all even numbers from the array
-even([], []).
-even([X|LIN], [X|LOUT]) :- X mod 2 =:= 0, even(LIN, LOUT).
-even([_|LIN], LOUT) :- even(LIN, LOUT).
-
-% Gets all odd numbers from the array
-odd([], []).
-odd([X|LIN], [X|LOUT]) :- X mod 2 =\= 0, odd(LIN, LOUT).
-odd([_|LIN], LOUT) :- odd(LIN, LOUT).
+% Sorts even and odd number to its arrays
+even_odd([], [], []).
+even_odd([X|LIN], Odd, [X|Even]) :- X mod 2 =:= 0, even_odd(LIN, Odd, Even).
+even_odd([X|LIN], [X|Odd], Even) :- even_odd(LIN, Odd, Even).
 
 % Joins two arrays
-join([], [], []).
+join([], B, B).
 join([X|A], B, [X|LOUT]) :- join(A, B, LOUT).
-join([], [X|B], [X|LOUT]) :- join([], B, LOUT).
